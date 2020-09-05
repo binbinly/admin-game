@@ -11,7 +11,7 @@ return [
     | login page.
     |
     */
-    'name' => 'Laravel-admin',
+    'name' => '管理后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | `img` tag, eg '<img src="http://logo-url" alt="Admin logo">'.
     |
     */
-    'logo' => '<b>Laravel</b> admin',
+    'logo' => '管理后台',
 
     /*
     |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image' => '',
+    'login_background_image' => '/img/bg2.gif',
 
     /*
     |--------------------------------------------------------------------------
