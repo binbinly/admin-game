@@ -6,11 +6,15 @@ namespace App\Models;
 
 use Mockery\Exception;
 
-class ConfigModel extends BaseModel
+class SearchConfigModel extends BaseModel
 {
-    protected $table = 'config';
+    protected $table = 'search_config';
 
     public $timestamps = false;
+
+    protected $casts = [
+        'value' => 'json',
+    ];
 
     public function getValueAttribute($value)
     {

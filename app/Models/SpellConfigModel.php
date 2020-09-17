@@ -6,11 +6,15 @@ namespace App\Models;
 
 use Mockery\Exception;
 
-class ConfigModel extends BaseModel
+class SpellConfigModel extends BaseModel
 {
-    protected $table = 'config';
+    protected $table = 'spell_config';
 
     public $timestamps = false;
+
+    protected $casts = [
+        'value' => 'json',
+    ];
 
     public function getValueAttribute($value)
     {
@@ -28,5 +32,10 @@ class ConfigModel extends BaseModel
         } else {
             $this->attributes['value'] = $value;
         }
+    }
+
+    public function setImageAttribute($value)
+    {
+        $this->attributes['image'] = env('APP_URL') . '/uploads/'.$value;
     }
 }

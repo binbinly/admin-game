@@ -6,7 +6,6 @@ use App\Models\ConfigModel;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
 
 class ConfigController extends AdminController
 {
@@ -29,7 +28,6 @@ class ConfigController extends AdminController
 
         $grid->column('name', '配置名');
         $grid->column('value', '配置值');
-        $grid->column('desc', '配置描述');
 
         return $grid;
     }
