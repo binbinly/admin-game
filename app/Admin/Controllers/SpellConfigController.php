@@ -25,7 +25,6 @@ class SpellConfigController extends AdminController
         $grid->column('id', '第几关');
         $grid->column('title', '标题');
         $grid->column('image', '封面')->image();
-        $grid->column('value', '配置值');
 
         return $grid;
     }
