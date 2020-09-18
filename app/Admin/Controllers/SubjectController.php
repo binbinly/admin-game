@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Actions\Post\ImportPost;
 use App\Models\CatModel;
 use App\Models\SubjectModel;
 use Encore\Admin\Controllers\AdminController;
@@ -25,6 +26,10 @@ class SubjectController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new SubjectModel());
+
+        $grid->tools(function (Grid\Tools $tools) {
+            $tools->append(new ImportPost());
+        });
 
         $grid->column('id', 'ID');
         $grid->column('title', '题目标题');

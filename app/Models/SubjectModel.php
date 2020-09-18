@@ -12,6 +12,8 @@ class SubjectModel extends BaseModel
         'content' => 'json',
     ];
 
+    protected $fillable = ['title', 'content', 'cat_id', 'true_option', 'created_at', 'updates_at'];
+
     public static $optionLabel = [
         1 => '选项一',
         2 => '选项二',
