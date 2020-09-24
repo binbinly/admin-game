@@ -33,7 +33,8 @@ class SubjectController extends AdminController
 
         $grid->column('id', 'ID');
         $grid->column('title', '题目标题');
-        $grid->column('cat_id', '专业分类')->using(CatModel::columnAll());
+        $grid->column('cat_id', '专业分类')
+            ->using(CatModel::columnAll())->filter(CatModel::columnAll());
         $grid->column('created_at', '创建时间');
         $grid->column('updated_at', '更新时间');
 
