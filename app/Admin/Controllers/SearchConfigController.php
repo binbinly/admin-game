@@ -21,9 +21,11 @@ class SearchConfigController extends AdminController
         $grid = new Grid(new SearchConfigModel());
         $grid->disableExport();
 
-        $grid->column('id', '第几关');
+        $grid->column('id', 'ID');
+        $grid->column('index', '第几关');
         $grid->column('title', '标题');
         $grid->column('major_id', '专业分类')->using(CatModel::columnAll());
+        $grid->column('image', '封面')->image();
 
         return $grid;
     }
@@ -37,9 +39,10 @@ class SearchConfigController extends AdminController
     {
         $form = new Form(new SearchConfigModel());
 
-        $form->number('id', '第几关')->required();
+        $form->number('index', '第几关')->required();
         $form->text('title', '标题')->required();
         $form->select('major_id', '专业')->options(CatModel::columnAll())->required();
+        $form->image('image', '图片')->required();
         $form->textarea('value', '配置信息')->required();
 
         return $form;
