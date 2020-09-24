@@ -24,7 +24,8 @@ class SearchConfigController extends AdminController
         $grid->column('id', 'ID');
         $grid->column('index', '第几关');
         $grid->column('title', '标题');
-        $grid->column('major_id', '专业分类')->using(CatModel::columnAll());
+        $grid->column('major_id', '专业分类')
+            ->using(CatModel::columnAll())->filter(CatModel::columnAll());
         $grid->column('image', '封面')->image();
 
         return $grid;
