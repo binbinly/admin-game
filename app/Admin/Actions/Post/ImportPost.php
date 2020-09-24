@@ -3,6 +3,7 @@
 namespace App\Admin\Actions\Post;
 
 use App\Imports\SubjectImport;
+use App\Models\CatModel;
 use App\Models\SubjectModel;
 use Encore\Admin\Actions\Action;
 use Illuminate\Http\Request;
@@ -25,15 +26,24 @@ class ImportPost extends Action
     {
         // 下面的代码获取到上传的文件，然后使用`maatwebsite/excel`等包来处理上传你的文件，保存到数据库
         $arr = Excel::toArray(new SubjectImport(), $request->file('file'));
+        $catId = intval($request->input('cat_id', 0));
+        if (!$catId) {
+            return $this->response()->error('请选择专业分类');
+        }
         $data = [];
         $errCount = 0;
+        $repeat = 0;
         foreach ($arr as $sheet) {
             foreach ($sheet as $k => $row) {
                 if ($k == 0) continue;
-                if ($r = $this->row($row)) {
+                if ($r = $this->row($row, $catId)) {
                     $data[] = $r;
                 } else {
                     $errCount++;
+                    continue;
+                }
+                if (SubjectModel::query()->where('title', $r['title'])->count()) {
+                    $repeat++;
                     continue;
                 }
                 if (count($data) == 50) {
@@ -45,15 +55,16 @@ class ImportPost extends Action
         if ($data) {
             SubjectModel::insert($data);
         }
-        return $this->response()->success('导入完成！导入失败数量：'.$errCount)->refresh();
+        return $this->response()->success('导入完成！导入失败数量：'.$errCount.';重复数据：'.$repeat)->refresh();
     }
 
     /**
      * 格式化行
      * @param $row
+     * @param $catId
      * @return array | bool
      */
-    protected function row($row){
+    protected function row($row, $catId){
         $data = [];
         if ($row[1]) {
             $data['title'] = $row[1];
@@ -76,7 +87,7 @@ class ImportPost extends Action
             return false;
         }
         $now = time();
-        $data['cat_id'] = 1;
+        $data['cat_id'] = $catId;
         $data['created_at'] = $now;
         $data['updated_at'] = $now;
         return $data;
@@ -84,6 +95,7 @@ class ImportPost extends Action
 
     public function form()
     {
+        $this->select('cat_id', '选择专业')->options(CatModel::columnAll())->required();
         $this->file('file', '请选择文件');
     }
 
